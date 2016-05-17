@@ -14,17 +14,19 @@ date: 2016-05-19
 * This tutorial will contribute towards an understanding of **Oligotyping analysis for specific bacterial lineage**
 
 #Preparing files
-* source /mnt/research/ShadeLab/software/loadanaconda2.sh
+* Load QIIME : source /mnt/research/ShadeLab/software/loadanaconda2.sh
 * OTU_map.uc
 * MASTER_OTU_hdf5_filteredfailedalignments_rdp_collapse_even321798.biom
-*
-*
+
+
 
 ***
 Picking acidobacterial sequences from full sequence dataset
 ***
 1. convert OTU_table.biom file to .txt file
+'''
 biom convert -i MASTER_OTU_hdf5_filteredfailedalignments_rdp_collapse_even321798.biom -o Classic_OTU_even321798.txt --to-tsv --header-key="taxonomy"
+'''
 
 2. take OTUs belonging to the Acidobacteria from classic OTU.txt file (using excel, based on the taxonomic classification)
    Number of acidobacterial sequences = 1,597,270 sequences
