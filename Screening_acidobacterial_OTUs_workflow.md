@@ -108,7 +108,7 @@ Q1. Can we make it automate, too?
 
 #Change “OTU_dn_###” to “OTU” in the Qiime_acido_map.txt file
 ```
-sed -i 's/OTU_dn_/OTUdn/g' OTU_map_NC.uc
+sed -i 's/OTU_dn_/OTUdn/g' OTU_map.uc
 ```
 
 
