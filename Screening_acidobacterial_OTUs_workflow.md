@@ -107,7 +107,6 @@ H       5804    253     97.2    +       0       0       508I253M760I    C10D01.1
 Q2. Can we make it automate, too?
 ***
 
-
 *Change “OTU_dn_###” to “OTU” in the Qiime_acido_map.txt file
 ```
 # because, to convert mapping file to Qiime format using Convert_UC_2_Qiime.py, but when I try to do it, “OTU_dn_” makes problem to running it.
@@ -117,6 +116,7 @@ But, it still done by manually.
 ***
 Q3. Can we automate?
 ***
+
 *Convert uclust mapping file to qiime format file.
 ```
 python Convert_UC_2_Qiime2.py sequences/Qiime_acido_map.txt > QIIME_ACIDO_MAP2.txt
