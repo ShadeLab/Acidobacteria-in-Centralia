@@ -108,13 +108,9 @@ Q1. Can we make it automate, too?
 
 #Change “OTU_dn_###” to “OTU” in the Qiime_acido_map.txt file
 ```
-# because, to convert mapping file to Qiime format using Convert_UC_2_Qiime.py, but when I try to do it, “OTU_dn_” makes problem to running it.
-Find and replace it using text editor.
-But, it still done by manually.
+sed -i 's/OTU_dn_/OTU/g' Qiime_acido_map.txt
 ```
-***
-Q2. Can we automate?
-***
+
 
 #Convert uclust mapping file to qiime format file.
 ```
@@ -130,12 +126,15 @@ convert_fastaqual_fastq.py -c fastq_to_fastaqual -f combined_merged.fastq -o fas
 grep -w ">" 97_otus.fasta >> combined_merged.fna
 cut -d ";" -f 1 fastaqual/combined_merged.fna > fastaqual/CleanedHeaders_combined_green_merged.fna
 ```
+***
+But, it only changes Denovo OTUs, not the greengene references's one.
+***
 
 #Pick acidobacterial sequences from total sequence set
 ```
 filter_fasta.py -f fastaqual/CleanedHeaders_combined_green_merged.fna -m ../QIIME_ACIDO_MAP2.txt -o Acido_from_RefNo.fasta
 ```
-* Result: "Acido_from_RefNo.fasta" has about 95,000 sequences were picked.
+* Result: "Acido_from_RefNo.fasta" has about 95,000 sequences were picked. It probably only from the Denovo OTUs.
 ***
 Solution?
 ***
