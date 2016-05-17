@@ -65,13 +65,18 @@ problem = grep OTU informations that are not involved in Acidobacteria
 | H	1718	253	97.2	+	0	0	517I253M729I	C18D05.27623	581409 |
 
 5. convert “OTU_dn_###” to “OTUdn” in the Qiime_acido_map.txt file
+```
 # because, to convert mapping file to Qiime format using Convert_UC_2_Qiime.py, but when I try to do it, “OTU_dn_” makes problem to running it.
 Find and replace it using text editor.
+```
 
 6. convert uclust file to qiime format file.
+```
 python Convert_UC_2_Qiime2.py sequences/Qiime_acido_map.txt > Qiime_map.txt
+```
 
 7. pick acidobacterial tax_assignment information from “MASTER_RepSeqs_filteredfailedalignments_tax_assignments_acido.txt” file, using acidotaxscreening.sh file
+```
 #!/bin/bash
 # trim centralia sequences so we can test pipeline and analysis
 # use pandaseq to merge reads - requires name list (file <list.txt> in same folder as this script) of forward and reverse reads to be merged using the panda-seq program
@@ -79,15 +84,29 @@ for file in $(<Acidolist.txt)
 do
     grep -w ${file} MASTER_RepSeqs_filteredfailedalignments_tax_assignments_acido.txt >> ./sequences/tax_assignments_acido.txt 
 done
+```
 
 8. prepare fasta file from uniques_combined_merged.fastq file
+```
 convert_fastaqual_fastq.py -c fastq_to_fastaqual -f uniques_combined_merged.fastq -o fastaqual
 cut -d ";" -f 1 uniques_combined_merged.fna > CleanedHeaders_uniques_combined_merged.fna
+```
 
 9. pick acidobacterial sequences from total sequence set
+```
 filter_fasta.py -f fastaqual/CleanedHeaders.fna -m ../QIIME_ACIDO_MAP2.txt -o Acido_from_RefNo.fasta
+```
+* Result: about 95,000 sequences were picked.
 
 
-OTU picking based on the RDP database
-# Reference-based OTU picking using usearch_global: Cluster sequences at 97% identity to the RDP database, version (aligned_trainset14_032015.rdp.fasta)
+***
+#Next step
+***
+
+*OTU picking based on the RDP database
+```
+Reference-based OTU picking using usearch_global: Cluster sequences at 97% identity to the RDP database, version (aligned_trainset14_032015.rdp.fasta)
+```
+```
 usearch -usearch_global nocrap_denoised_nosigs_uniques_combined_merged.fastq -id 0.97 -db aligned_trainset14_032015.rdp.fasta -notmatchedfq RefNoMatch_nocrap_denoised_nosigs_uniques_combined_merged.fastq -strand plus -uc RefMatchOTUMap_nocrap_denoised_nosigs_uniques_combined_merged.uc -dbmatched RDP_97_rep_set_matched.fa
+```
