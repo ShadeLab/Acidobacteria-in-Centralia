@@ -47,6 +47,7 @@ done
 ***
 problem = grep OTU informations that are not involved in Acidobacteria
 ***
+```
 | Example |
 | H	4526	253	99.6	+	0	0	512I253M614I	C11D01.1718	210306 |
 | H	6544	253	98.4	+	0	0	516I253M695I	C08D02.1718	1111657 |
@@ -63,6 +64,7 @@ problem = grep OTU informations that are not involved in Acidobacteria
 | H	1718	253	97.2	+	0	0	517I253M729I	C10D02.73053	581409 |
 | H	1312	253	98.4	+	0	0	485I253M691I	C18D05.1718	671400 |
 | H	1718	253	97.2	+	0	0	517I253M729I	C18D05.27623	581409 |
+```
 
 5. convert “OTU_dn_###” to “OTUdn” in the Qiime_acido_map.txt file
 ```
