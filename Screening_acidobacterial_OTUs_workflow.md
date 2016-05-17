@@ -25,16 +25,15 @@ Picking acidobacterial sequences from full sequence dataset
 biom convert -i MASTER_OTU_hdf5_filteredfailedalignments_rdp_collapse_even321798.biom -o Classic_OTU_even321798.txt --to-tsv --header-key="taxonomy"
 ```
 
-#Pick OTUs belonging to the Acidobacteria from classic OTU.txt file (using excel, based on the taxonomic affiliation)
-```   
+#Pick OTUs belonging to the Acidobacteria from classic OTU_even321798.txt file (only includes OTU ID belonging to the acidobacterial group)
+```
+grep "Acidobacteria" Classic_OTU_even321798.txt > AcidoOTUs.txt
+awk '{print$1}' AcidoOTUs.txt >> Acidolist.txt
+```
+```
 Number of acidobacterial sequences = 1,597,270 sequences
 Number of OTUs = 2391 otus
 ```
-
-#Create "Acidolist.txt" file (only includes OTU ID belonging to the acidobacterial group). (using excel)
-***
-Q. Can we make it automate?
-***
 
 #screening acidobacterial OTU map from “OTU_map.uc file” using shell script "acidoscreening.sh" file
 ```
@@ -104,7 +103,7 @@ H       5804    253     97.2    +       0       0       508I253M760I    C10D01.1
 ```
 ***
 ***
-Q2. Can we make it automate, too?
+Q1. Can we make it automate, too?
 ***
 
 #Change “OTU_dn_###” to “OTU” in the Qiime_acido_map.txt file
@@ -114,7 +113,7 @@ Find and replace it using text editor.
 But, it still done by manually.
 ```
 ***
-Q3. Can we automate?
+Q2. Can we automate?
 ***
 
 #Convert uclust mapping file to qiime format file.
