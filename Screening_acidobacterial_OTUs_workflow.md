@@ -5,12 +5,12 @@ comments: true
 date: 2016-05-19
 ---
 
-##This Workflow for Oligotyping analyses for acidobacterial community ecology in Centralia.
+#This Workflow for Oligotyping analyses for acidobacterial community ecology in Centralia.
 
 #Intro to computing workflow to screening OTUs belonging to the phylum Acidobacteria
 
 
-##Overarching Goal
+#Overarching Goal
 * This tutorial will contribute towards an understanding of **Oligotyping analysis for specific bacterial lineage**
 
 #Preparing files
@@ -18,29 +18,32 @@ date: 2016-05-19
 * OTU_map.uc
 * MASTER_OTU_hdf5_filteredfailedalignments_rdp_collapse_even321798.biom
 
-
-
 ***
 Picking acidobacterial sequences from full sequence dataset
 ***
 1. convert OTU_table.biom file to .txt file
-'''
+```
 biom convert -i MASTER_OTU_hdf5_filteredfailedalignments_rdp_collapse_even321798.biom -o Classic_OTU_even321798.txt --to-tsv --header-key="taxonomy"
-'''
+```
 
 2. take OTUs belonging to the Acidobacteria from classic OTU.txt file (using excel, based on the taxonomic classification)
-   Number of acidobacterial sequences = 1,597,270 sequences
+```   
+Number of acidobacterial sequences = 1,597,270 sequences
+```
 
 3. make "Acidolist.txt" file (only includes OTU ID belonging to the acidobacterial group). (using excel)
+   Q. Can we make it automate?
 
 4. screening acidobacterial OTU map from “OTU_map.uc file” using shell script "acidoscreening.sh" file
+```
 #!/bin/bash
 # trim centralia sequences so we can test pipeline and analysis
 # use pandaseq to merge reads - requires name list (file <list.txt> in same folder as $
 for file in $(<Acidolist.txt)
 do
-    grep -w ${file} OTU_map1.uc >> ./sequences/Qiime_acido_map.txt
+   grep -w ${file} OTU_map1.uc >> ./sequences/Qiime_acido_map.txt
 done
+```
 
 ## problem = grep OTU informations that are not involved in Acidobacteria
 ***
