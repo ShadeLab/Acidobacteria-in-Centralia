@@ -31,7 +31,9 @@ Number of acidobacterial sequences = 1,597,270 sequences
 ```
 
 3. make "Acidolist.txt" file (only includes OTU ID belonging to the acidobacterial group). (using excel)
-   Q. Can we make it automate?
+```  
+ Q. Can we make it automate?
+```
 
 4. screening acidobacterial OTU map from “OTU_map.uc file” using shell script "acidoscreening.sh" file
 ```
@@ -47,8 +49,8 @@ done
 ## problem = grep OTU informations that are not involved in Acidobacteria
 ---
 Example
-1 : H	4526	253	99.6	+	0	0	512I253M614I	C11D01.1718	210306
-2 : H	6544	253	98.4	+	0	0	516I253M695I	C08D02.1718	1111657
+| H	4526	253	99.6	+	0	0	512I253M614I	C11D01.1718	210306 |
+:H	6544	253	98.4	+	0	0	516I253M695I	C08D02.1718	1111657
 :H	5804	253	98.8	+	0	0	508I253M760I	C08D02.29889	1718
 :H	1718	253	98.0	+	0	0	517I253M729I	C08D02.52093	581409
 :H	1718	253	97.6	+	0	0	517I253M729I	C08D02.89689	581409
