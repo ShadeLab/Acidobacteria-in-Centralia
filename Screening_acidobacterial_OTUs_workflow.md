@@ -25,18 +25,18 @@ Picking acidobacterial sequences from full sequence dataset
 biom convert -i MASTER_OTU_hdf5_filteredfailedalignments_rdp_collapse_even321798.biom -o Classic_OTU_even321798.txt --to-tsv --header-key="taxonomy"
 ```
 
-*Pick OTUs belonging to the Acidobacteria from classic OTU.txt file (using excel, based on the taxonomic affiliation)
+#Pick OTUs belonging to the Acidobacteria from classic OTU.txt file (using excel, based on the taxonomic affiliation)
 ```   
 Number of acidobacterial sequences = 1,597,270 sequences
 Number of OTUs = 2391 otus
 ```
 
-*Create "Acidolist.txt" file (only includes OTU ID belonging to the acidobacterial group). (using excel)
+#Create "Acidolist.txt" file (only includes OTU ID belonging to the acidobacterial group). (using excel)
 ***
 Q. Can we make it automate?
 ***
 
-*screening acidobacterial OTU map from “OTU_map.uc file” using shell script "acidoscreening.sh" file
+#screening acidobacterial OTU map from “OTU_map.uc file” using shell script "acidoscreening.sh" file
 ```
 #!/bin/bash
 # trim centralia sequences so we can test pipeline and analysis
@@ -107,7 +107,7 @@ H       5804    253     97.2    +       0       0       508I253M760I    C10D01.1
 Q2. Can we make it automate, too?
 ***
 
-*Change “OTU_dn_###” to “OTU” in the Qiime_acido_map.txt file
+#Change “OTU_dn_###” to “OTU” in the Qiime_acido_map.txt file
 ```
 # because, to convert mapping file to Qiime format using Convert_UC_2_Qiime.py, but when I try to do it, “OTU_dn_” makes problem to running it.
 Find and replace it using text editor.
@@ -117,7 +117,7 @@ But, it still done by manually.
 Q3. Can we automate?
 ***
 
-*Convert uclust mapping file to qiime format file.
+#Convert uclust mapping file to qiime format file.
 ```
 python Convert_UC_2_Qiime2.py sequences/Qiime_acido_map.txt > QIIME_ACIDO_MAP2.txt
 ```
@@ -125,14 +125,14 @@ python Convert_UC_2_Qiime2.py sequences/Qiime_acido_map.txt > QIIME_ACIDO_MAP2.t
 Converted file has only 2066 OTUs with sequence name. Something is problem.
 ***
 
-*Prepare fasta file from combined_merged.fastq file
+#Prepare fasta file from combined_merged.fastq file
 ```
 convert_fastaqual_fastq.py -c fastq_to_fastaqual -f combined_merged.fastq -o fastaqual
 grep -w ">" 97_otus.fasta >> combined_merged.fna
 cut -d ";" -f 1 fastaqual/combined_merged.fna > fastaqual/CleanedHeaders_combined_green_merged.fna
 ```
 
-*Pick acidobacterial sequences from total sequence set
+#Pick acidobacterial sequences from total sequence set
 ```
 filter_fasta.py -f fastaqual/CleanedHeaders_combined_green_merged.fna -m ../QIIME_ACIDO_MAP2.txt -o Acido_from_RefNo.fasta
 ```
@@ -146,7 +146,7 @@ Solution?
 #Next step
 ***
 
-*OTU picking based on the RDP database
+#OTU picking based on the RDP database
 ```
 Reference-based OTU picking using usearch_global: Cluster sequences at 97% identity to the RDP database, version (aligned_trainset14_032015.rdp.fasta)
 ```
