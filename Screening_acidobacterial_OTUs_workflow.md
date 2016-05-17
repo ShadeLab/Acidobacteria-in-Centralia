@@ -145,7 +145,14 @@ Solution?
 ***
 #Next step
 ***
+* Following the Meren Lab's protocol? (link below)
+```
+http://merenlab.org/projects/oligotyping/
+```
 
+***
+Other concept
+***
 #OTU picking based on the RDP database
 ```
 Reference-based OTU picking using usearch_global: Cluster sequences at 97% identity to the RDP database, version (aligned_trainset14_032015.rdp.fasta)
