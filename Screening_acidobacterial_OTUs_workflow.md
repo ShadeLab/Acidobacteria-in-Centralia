@@ -6,8 +6,7 @@ date: 2016-05-19
 ---
 
 #This Workflow for Oligotyping analyses for acidobacterial community ecology in Centralia.
-
-#Intro to computing workflow to screening OTUs belonging to the phylum Acidobacteria
+* Intro to computing workflow to screening OTUs belonging to the phylum Acidobacteria
 
 
 #Overarching Goal
@@ -46,7 +45,6 @@ done
 ```
 
 ## problem = grep OTU informations that are not involved in Acidobacteria
-***
 ---
 Example
 1 : H	4526	253	99.6	+	0	0	512I253M614I	C11D01.1718	210306
