@@ -74,7 +74,7 @@ cut -d ";" -f 1 fastaqual/combined_merged.fna > fastaqual/CleanedHeaders_combine
 
 #Pick acidobacterial sequences from total sequence set
 ```
-filter_fasta.py -f fastaqual/CleanedHeaders_combined_green_merged.fna -m ../QIIME_ACIDO_MAP2.txt -o Acido_from_RefNo.fasta
+filter_fasta.py -f CleanedHeaders_combined_merged_W_GG_ref.fna -m sequences_JSmethod/total_qiime_acido_map.txt -o ./Acido_seqs_from_merg_Refs.fasta
 ```
 
 ***
