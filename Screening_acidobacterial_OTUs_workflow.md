@@ -22,17 +22,17 @@ Picking acidobacterial sequences from full sequence dataset
 ***
 *convert OTU_table.biom file to .txt file
 ```
-biom convert -i MASTER_OTU_hdf5_filteredfailedalignments_rdp_collapse_even321798.biom -o Classic_OTU_even321798.txt --to-tsv --header-key="taxonomy"
+biom convert -i MASTER_OTU_hdf5_filteredfailedalignments_rdp.biom -o Classic_OTU_collapse.txt --to-tsv --header-key="taxonomy"
 ```
 
 #Pick OTUs belonging to the Acidobacteria from classic OTU_even321798.txt file (only includes OTU ID belonging to the acidobacterial group)
 ```
-grep "Acidobacteria" Classic_OTU_even321798.txt > AcidoOTUs.txt
+grep "Acidobacteria" Classic_OTU_collapse.txt > AcidoOTUs.txt
 awk '{print$1}' AcidoOTUs.txt >> Acidolist.txt
 ```
 ```
-Number of acidobacterial sequences = 1,597,270 sequences
-Number of OTUs = 2391 otus
+Number of acidobacterial sequences = 2,221,021 sequences
+Number of OTUs = 2,409 otus
 ```
 
 #Change uclust OTU map to Qiime map.
