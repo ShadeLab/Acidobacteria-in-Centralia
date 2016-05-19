@@ -25,7 +25,7 @@ Picking acidobacterial sequences from full sequence dataset
 biom convert -i MASTER_OTU_hdf5_filteredfailedalignments_rdp.biom -o Classic_OTU_collapse.txt --to-tsv --header-key="taxonomy"
 ```
 
-#Pick OTUs belonging to the Acidobacteria from classic OTU_even321798.txt file (only includes OTU ID belonging to the acidobacterial group)
+#Pick OTUs belonging to the Acidobacteria from Classic_OTU_collapse.txt file (only includes OTU ID belonging to the acidobacterial group)
 ```
 grep "Acidobacteria" Classic_OTU_collapse.txt > AcidoOTUs.txt
 awk '{print$1}' AcidoOTUs.txt >> Acidolist.txt
@@ -33,6 +33,7 @@ awk '{print$1}' AcidoOTUs.txt >> Acidolist.txt
 ```
 Number of acidobacterial sequences = 2,221,021 sequences
 Number of OTUs = 2,409 otus
+3 OTUs (13 sequences) only observed in the Mock community.
 ```
 
 #Change uclust OTU map to Qiime map.
@@ -76,6 +77,12 @@ cut -d ";" -f 1 fastaqual/combined_merged.fna > fastaqual/CleanedHeaders_combine
 ```
 filter_fasta.py -f CleanedHeaders_combined_merged_W_GG_ref.fna -m sequences_JSmethod/total_qiime_acido_map.txt -o ./Acido_seqs_from_merg_Refs.fasta
 ```
+***
+from OTU table = 2,217,760 sequences
+In the Acido_seqs_from_merg_Refs.fasta = 2,172,325 sequences
+balance = 45,435 sequences???
+***
+
 
 ***
 #Next step
