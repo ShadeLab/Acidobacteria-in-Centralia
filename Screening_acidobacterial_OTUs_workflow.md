@@ -66,20 +66,14 @@ do
 done
 ```
 
-#Prepare fasta file from combined_merged.fastq file
-```
-convert_fastaqual_fastq.py -c fastq_to_fastaqual -f combined_merged.fastq -o fastaqual
-grep -w ">" 97_otus.fasta >> combined_merged.fna
-cut -d ";" -f 1 fastaqual/combined_merged.fna > fastaqual/CleanedHeaders_combined_green_merged.fna
-```
-
 #Pick acidobacterial sequences from total sequence set
 ```
-filter_fasta.py -f CleanedHeaders_combined_merged_W_GG_ref.fna -m sequences_JSmethod/total_qiime_acido_map.txt -o ./Acido_seqs_from_merg_Refs.fasta
+filter_fasta.py -f combined_merged.fna -m sequences_JSmethod/total_qiime_acido_map.txt -o Acido_seqs_from_combined_merg.fasta
 ```
 ***
 from OTU table = 2,217,760 sequences
 In the Acido_seqs_from_merg_Refs.fasta = 2,172,325 sequences
+Acido_seqs_from_combined_merg.fasta = 2,172,325 sequences
 balance = 45,435 sequences???
 ***
 
@@ -112,4 +106,11 @@ sed -i 's/string to be replaced/string to replace it with/g' file to edit
 ```
 (example)
 sed -i 's/OTU_dn_/OTUdn/g' OTU_map.uc
+```
+
+#Prepare fasta file from combined_merged.fastq file
+```
+convert_fastaqual_fastq.py -c fastq_to_fastaqual -f combined_merged.fastq -o fastaqual
+grep -w ">" 97_otus.fasta >> combined_merged.fna
+cut -d ";" -f 1 fastaqual/combined_merged.fna > fastaqual/CleanedHeaders_combined_green_merged.fna
 ```
