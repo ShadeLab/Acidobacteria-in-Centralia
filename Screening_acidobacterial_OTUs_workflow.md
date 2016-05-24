@@ -76,6 +76,37 @@ Acido_seqs_from_combined_merg.fasta = 2,172,325 sequences
 balance = 45,435 sequences???
 ***
 
+#grep sequences belonging to each OTUs individually (using qsub script) 
+```
+#! /bin/bash --login
+# Time job will take to execute (HH:MM:SS format)
+#PBS -l walltime=010:00:00
+# Memory needed by the job
+#PBS -l mem=264Gb
+# Number of shared memory nodes required and the number of processors per node
+#PBS -l nodes=1:ppn=8
+# Make output and error files the same file
+#PBS -j oe
+# Send an email when a job is aborted, begins or ends
+#PBS -m abe
+# Give the job a name
+#PBS -N batch_usearch_centralia_03dec2015
+# _______________________________________________________________________#
+
+cd ${PBS_O_WORKDIR}
+
+### i.  make fasttree
+     source /mnt/research/ShadeLab/software/loadanaconda2.sh
+     python Convert_UC_2_QiimeJS.py screening_otus/AcidoOTUs/${file}.txt > screening_otus/AcidoOTUs/${file}_qiime_map.txt
+
+     filter_fasta.py -f OTUfromRDP/fastaqual/combined_merged.fna -m screening_otus/AcidoOTUs/${file}_qiime_map.txt -o screening_otus/Acidosequences/${file}.fasta
+
+ _______________________________________________________________________#
+# PBS stats
+cat ${PBS_NODEFILE}
+env | grep PBS
+qstat -f ${PBS_JOBID}
+```
 
 ***
 #Next step
