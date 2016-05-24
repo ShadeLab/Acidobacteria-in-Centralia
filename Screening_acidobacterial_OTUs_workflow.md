@@ -13,21 +13,24 @@ date: 2016-05-19
 * This tutorial will contribute towards an understanding of **Oligotyping analysis for specific bacterial lineage**
 
 #Preparing files
-* Load QIIME : source /mnt/research/ShadeLab/software/loadanaconda2.sh
+* Load QIIME
+```
+source /mnt/research/ShadeLab/software/loadanaconda2.sh
+```
 * OTU_map.uc
-* MASTER_OTU_hdf5_filteredfailedalignments_rdp_collapse_even321798.biom
+* MASTER_OTU_hdf5_filteredfailedalignments_rdp.biom
 
 ***
 Picking acidobacterial sequences from full sequence dataset
 ***
 *convert OTU_table.biom file to .txt file
 ```
-biom convert -i MASTER_OTU_hdf5_filteredfailedalignments_rdp.biom -o Classic_OTU_collapse.txt --to-tsv --header-key="taxonomy"
+biom convert -i MASTER_OTU_hdf5_filteredfailedalignments_rdp.biom -o Classic_OTU_rdp.txt --to-tsv --header-key="taxonomy"
 ```
 
 #Pick OTUs belonging to the Acidobacteria from Classic_OTU_collapse.txt file (only includes OTU ID belonging to the acidobacterial group)
 ```
-grep "Acidobacteria" Classic_OTU_collapse.txt > AcidoOTUs.txt
+grep "Acidobacteria" Classic_OTU_rdp.txt > AcidoOTUs.txt
 awk '{print$1}' AcidoOTUs.txt >> Acidolist.txt
 ```
 ```
@@ -44,8 +47,6 @@ python Convert_UC_2_QiimeJS.py OTU_map.uc > OTU_map_qiime.txt
 #Grep sequences belong to the acidobacterial OTUs from mapping file.
 ```
 #!/bin/bash
-# trim centralia sequences so we can test pipeline and analysis
-# use pandaseq to merge reads - requires name list (file <list.txt> in same folder as this script) of forward and reverse reads to be merged using the panda-seq program
 
 for file in $(<Acidolist.txt)
 do
@@ -56,8 +57,6 @@ done
 or
 ```
 #!/bin/bash
-# trim centralia sequences so we can test pipeline and analysis
-# use pandaseq to merge reads - requires name list (file <list.txt> in same folder as this script) of forward and reverse reads to be merged using the panda-seq program
 
 for file in $(<Acidolist.txt)
 do
