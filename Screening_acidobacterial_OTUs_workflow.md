@@ -115,6 +115,92 @@ qstat -f ${PBS_JOBID}
 ```
 http://merenlab.org/projects/oligotyping/
 ```
+***
+Preparing "RDP reference sequences" fasta file. (Informations from Mothur homepage)
+***
+Down load reference file from Mothur website (http://www.mothur.org/wiki/RDP_reference_files)
+```
+wget -N http://sourceforge.net/projects/rdp-classifier/files/RDP_Classifier_TrainingData/RDPClassifier_16S_trainsetNo14_rawtrainingdata.zip
+unzip -o RDPClassifier_16S_trainsetNo14_rawtrainingdata.zip
+mv RDPClassifier_16S_trainsetNo14_rawtrainingdata/* ./
+```
+RDP duplicated the sequence of GL982576_U010303693 in these files and so we need to remove the second copy. (with Mothur)
+```
+sed 's/[\|]/_/' trainset14_032015.fasta > trainset14_032015.temp.fasta
+
+echo "GL982576_U010303693" > duplicate.accnos
+
+* using Mothur from here.
+mothur "#get.seqs(accnos=duplicate.accnos, fasta=trainset14_032015.temp.fasta); unique.seqs()"
+
+mothur "#remove.seqs(accnos=duplicate.accnos, fasta=trainset14_032015.temp.fasta)"
+
+cat trainset14_032015.temp.pick.fasta trainset14_032015.temp.pick.unique.fasta > trainset14_032015.rdp.fasta
+```
+Taxonomy file and the fasta file that will be our reference.
+```
+grep ">" trainset14_032015.rdp.fasta | cut -c 2- > trainset14_032015_rmdup.tax
+```
+Get Taxonomy file properly formatted (Using R code)
+```
+R code
+
+tax_file <- scan(file="trainset14_032015_rmdup.tax", what="", sep="\n", quiet=TRUE)
+
+accession <- gsub("^(\\S*).*", "\\1", tax_file) #some are separated by tabs or spaces or both
+
+taxonomy <- gsub(".*(Root.*)", "\\1", tax_file)
+taxonomy <- gsub(" ", "_", taxonomy)    #remove spaces and replace with '_'
+taxonomy <- gsub("\t", "", taxonomy)    #remove extra tab characters
+taxonomy <- gsub("[^;]*_incertae_sedis$", "", taxonomy)
+taxonomy <- gsub('\"', '', taxonomy) #remove quote marks
+
+levels <- read.table(file="trainset14_db_taxid.txt", sep="*", stringsAsFactors=FALSE)
+subs <- levels[grep("sub", levels$V5),]
+sub.names <- subs$V2
+
+tax.split <- strsplit(taxonomy, split=";")
+
+remove.subs <- function(tax.vector){
+    return(tax.vector[which(!tax.vector %in% sub.names)])
+}
+
+no.subs <- lapply(tax.split, remove.subs)
+no.subs.str <- unlist(lapply(no.subs, paste, collapse=";"))
+no.subs.str <- gsub("^Root;(.*)$", "\\1;", no.subs.str)
+
+write.table(cbind(as.character(accession), no.subs.str), "trainset14_032015.rdp.tax", row.names=F, col.names=F, quote=F, sep="\t")
+```
+Add sequences involved in the mitochondria or sequences from eukaryotes into sequence dataset
+```
+wget -N http://mothur.org/w/images/2/24/Trainset10_082014.pds.tgz
+tar xvzf Trainset10_082014.pds.tgz
+mv trainset10_082014.pds/trainset10_082014* ./
+rm -rf trainset10_082014.pds Trainset10_082014.pds.tgz
+```
+Pull out the extra sequences that are in the pds files
+```
+mothur "#get.lineage(fasta=trainset10_082014.pds.fasta, taxonomy=trainset10_082014.pds.tax, taxon=Eukaryota-Mitochondria)"
+```
+This last command gets us the extra “pds” sequences that we can now use to paste on to the end of the normal RDP training set
+```
+cat trainset14_032015.rdp.tax trainset10_082014.pds.pick.tax > trainset14_032015.pds.tax
+cat trainset14_032015.rdp.fasta trainset10_082014.pds.pick.fasta > trainset14_032015.pds.fasta
+```
+Confirm sequence dataset
+```
+wc -l *.pds.tax
+
+*results
+##    10773 trainset10_082014.pds.tax
+##    10801 trainset14_032015.pds.tax
+##    21574 total
+```
+Alignment of this reference file using RDP pipeline
+```
+https://pyro.cme.msu.edu/index.jsp
+```
+
 
 ***
 Other concept
