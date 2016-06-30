@@ -116,6 +116,34 @@ qstat -f ${PBS_JOBID}
 http://merenlab.org/projects/oligotyping/
 ```
 ***
+Commands
+***
+```
+o-trim-uninformative-columns-from-alignment Acido_seqs_from_combined_merg_aligned.fasta
+
+o-smart-trim Acido_seqs_from_combined_merg_aligned.fasta-TRIMMED -E -o Acido_seqs_from_combined_merg_aligned_sub_trimmed_from_begining.fasta
+
+o-smart-trim Acido_seqs_from_combined_merg_aligned_sub_trimmed_from_begining.fasta -S -o Acido_align_fixed.fasta
+```
+
+***
+Test with 1000 subsampled aligned sequences
+***
+```
+seqtk sample -s 100 Acido_seqs_from_combined_merg_aligned.fasta 1000 > Acido_seqs_from_combined_merg_aligned_sub.fasta
+
+o-trim-uninformative-columns-from-alignment Acido_seqs_from_combined_merg_aligned_sub.fasta
+
+o-smart-trim Acido_seqs_from_combined_merg_aligned_sub.fasta-TRIMMED -E -o Acido_seqs_from_combined_merg_aligned_sub_trimmed_from_begining.fasta
+
+o-smart-trim Acido_seqs_from_combined_merg_aligned_sub_trimmed_from_begining.fasta -S -o Acido_align_fixed.fasta
+
+entropy-analysis Acido_align_fixed.fasta
+```
+
+
+# test 2
+***
 Preparing "RDP reference sequences" fasta file. (Informations from Mothur homepage)
 ***
 Down load reference file from Mothur website (http://www.mothur.org/wiki/RDP_reference_files)
