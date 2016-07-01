@@ -139,6 +139,8 @@ o-smart-trim Acido_seqs_from_combined_merg_aligned_sub.fasta-TRIMMED -E -o Acido
 o-smart-trim Acido_seqs_from_combined_merg_aligned_sub_trimmed_from_begining.fasta -S -o Acido_align_fixed.fasta
 
 entropy-analysis Acido_align_fixed.fasta
+
+oligotype Acido_align_fixed.fasta Acido_align_fixed.fasta-ENTROPY -c 2 -M 10 --quick
 ```
 
 
