@@ -260,3 +260,8 @@ convert_fastaqual_fastq.py -c fastq_to_fastaqual -f combined_merged.fastq -o fas
 grep -w ">" 97_otus.fasta >> combined_merged.fna
 cut -d ";" -f 1 fastaqual/combined_merged.fna > fastaqual/CleanedHeaders_combined_green_merged.fna
 ```
+
+#Replace "." to "tab"
+```
+sed 's/\./[Ctrl+v][Ctrl+i]/g' Acido_align_fixed.fasta > Acido_align_fixed_1.fasta
+```
