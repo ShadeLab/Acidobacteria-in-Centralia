@@ -108,6 +108,7 @@ env | grep PBS
 qstat -f ${PBS_JOBID}
 ```
 
+
 ***
 #Next step
 ***
@@ -118,6 +119,54 @@ http://merenlab.org/projects/oligotyping/
 ***
 Commands
 ***
+* Align sequences (using qsub script)
+```
+#! /bin/bash --login
+# Time job will take to execute (HH:MM:SS format)
+#PBS -l walltime=048:00:00
+# Memory needed by the job
+#PBS -l mem=264Gb
+# Number of shared memory nodes required and the number of processors per node
+#PBS -l nodes=4:ppn=8
+# Make output and error files the same file
+#PBS -j oe
+# Send an email when a job is aborted, begins or ends
+#PBS -m abe
+# Give the job a name
+#PBS -N batch_usearch_centralia_03dec2015
+# _______________________________________________________________________#
+
+cd ${PBS_O_WORKDIR}
+
+source /mnt/research/ShadeLab/software/loadanaconda2.sh
+
+     align_seqs.py -i Acido_seqs_from_combined_merg.fasta -t /mnt/research/ShadeLab/SharedResources/SILVA123_QIIME_release/core_alignment/core_alignment_SILVA123.fasta -o ./aligned_Acido_seqs_from_combined_merged
+
+done
+
+ _______________________________________________________________________#
+# PBS stats
+cat ${PBS_NODEFILE}
+env | grep PBS
+qstat -f ${PBS_JOBID}
+```
+***
+Alignment step changes the sequence name
+(ex) C09D06.1  =>  C09D06.1 1..253
+Necessary to change the sequence name to oligotyping process form (C09D06   1)
+***
+```
+command
+sed 's/ 1..*//g' Acido_seqs_from_combined_merg_aligned.fasta > Acido_aligned_NC.fasta
+sed 's/\./_/g' Acido_aligned_NC.fasta > Acido_aligned_NC1.fasta
+o-get-sample-info-from-fasta Acido_aligned_NC1.fasta
+```
+```
+
+Total number of samples: 55
+Total number of reads: 2,218,830
+```
+
 ```
 o-trim-uninformative-columns-from-alignment Acido_seqs_from_combined_merg_aligned.fasta
 
