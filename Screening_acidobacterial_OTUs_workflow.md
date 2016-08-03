@@ -19,6 +19,24 @@ source /mnt/research/ShadeLab/software/loadanaconda2.sh
 ```
 * OTU_map.uc
 * MASTER_OTU_hdf5_filteredfailedalignments_rdp.biom
+* Installing the latest stable version using pip (suggested method)
+```
+Install macports
+https://www.macports.org/install.php
+
+-command-
+sudo port selfupdate
+sudo port install python27
+sudo port select --set python python27
+sudo port install py27-pip py27-scipy py27-matplotlib py27-biopython py27-django git
+sudo port select --set pip pip27
+sudo port install R
+R
+install.packages(c('vegan', 'ggplot2', 'gplots', 'gtools', 'reshape', 'optparse', 'pheatmap', 'RColorBrewer', 'compute.es'))
+quit()
+sudo pip install oligotyping
+ls /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/oligotype
+```
 
 ***
 Picking acidobacterial sequences from full sequence dataset
