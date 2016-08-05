@@ -17,6 +17,7 @@ date: 2016-05-19
 ```
 source /mnt/research/ShadeLab/software/loadanaconda2.sh
 ```
+#this OTU map and biom table came from an open-reference usearch OTU picking from 16S analysis
 * OTU_map.uc
 * MASTER_OTU_hdf5_filteredfailedalignments_rdp.biom
 * Installing the latest stable version using pip (suggested method)
@@ -57,6 +58,8 @@ Number of OTUs = 2,409 otus
 3 OTUs (13 sequences) only observed in the Mock community.
 ```
 
+#INSERT script to convert the usearch map to a QIIME map.
+
 #Change uclust OTU map to Qiime map.
 ```
 python Convert_UC_2_QiimeJS.py OTU_map.uc > OTU_map_qiime.txt
@@ -83,7 +86,7 @@ do
 done
 ```
 
-#Pick acidobacterial sequences from total sequence set
+#Pick acidobacterial sequences from total sequence set, make a combined Acidobacteria file
 ```
 filter_fasta.py -f combined_merged.fna -m sequences_JSmethod/total_qiime_acido_map.txt -o Acido_seqs_from_combined_merg.fasta
 ```
@@ -113,7 +116,7 @@ balance = 45,435 sequences???
 
 cd ${PBS_O_WORKDIR}
 
-### i.  make fasttree
+### Filtering sequences into each OTU previously identified as Acidobacteria
      source /mnt/research/ShadeLab/software/loadanaconda2.sh
      python Convert_UC_2_QiimeJS.py screening_otus/AcidoOTUs/${file}.txt > screening_otus/AcidoOTUs/${file}_qiime_map.txt
 
@@ -137,7 +140,7 @@ http://merenlab.org/projects/oligotyping/
 ***
 Commands
 ***
-* Align sequences (using qsub script)
+* Align all sequences (using qsub script)
 ```
 #! /bin/bash --login
 # Time job will take to execute (HH:MM:SS format)
@@ -242,10 +245,13 @@ Total number of reads: 2,218,830
 ```
 
 ```
+#remove gaps from alignment? not used because memory issues on laptop, used below options for lap
 o-trim-uninformative-columns-from-alignment Acido_seqs_from_combined_merg_aligned.fasta
 
+#remove gap from beginning of sequences?
 o-smart-trim Acido_seqs_from_combined_merg_aligned.fasta-TRIMMED -E -o Acido_seqs_from_combined_merg_aligned_sub_trimmed_from_begining.fasta
 
+#remove gaps from ends of sequences?
 o-smart-trim Acido_seqs_from_combined_merg_aligned_sub_trimmed_from_begining.fasta -S -o Acido_align_fixed.fasta
 ```
 
